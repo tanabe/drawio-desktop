@@ -4,7 +4,7 @@ const os = require('os');
 const path = require('path')
 const url = require('url')
 const {Menu: menu, shell, dialog, session,
-		clipboard, nativeImage, ipcMain, app, BrowserWindow} = require('electron')
+		clipboard, nativeImage, ipcMain, app, BrowserWindow, globalShortcut} = require('electron')
 const crc = require('crc');
 const zlib = require('zlib');
 const log = require('electron-log')
@@ -937,6 +937,13 @@ app.on('ready', e =>
 	{
 		autoUpdater.checkForUpdates()
 	}
+
+    if (isMac)
+    {
+        globalShortcut.register("Command+W", () => {
+            windowAction("close");
+        });
+    }
 })
 
 //Quit from the dock context menu should quit the application directly
